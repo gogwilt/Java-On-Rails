@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
 	<classpathentry kind="lib" path="lib/jruby-complete-1.6.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/guava-11.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
