@@ -3,7 +3,7 @@ package javaonrails.server;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
- * Dispatcher which instantiates ruby controllers a
+ * Dispatcher which instantiates ruby controllers in response to dynamic content requests.
  * @author rbuckheit
  */
 public class ControllerDispatcher implements JORDispatcher {
