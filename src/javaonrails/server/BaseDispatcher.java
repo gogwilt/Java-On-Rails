@@ -1,5 +1,7 @@
 package javaonrails.server;
 
+import javaonrails.JORResourceProvider;
+
 import com.sun.net.httpserver.HttpExchange;
 
 /**
@@ -10,10 +12,12 @@ public class BaseDispatcher implements JORDispatcher {
 
 	private AssetDispatcher assetDispatcher;
 	private ControllerDispatcher controllerDispatcher;
+	private final JORResourceProvider resourceProvider;
 	
-	public BaseDispatcher() {
-		this.assetDispatcher = new AssetDispatcher();
-		this.controllerDispatcher = new ControllerDispatcher();
+	public BaseDispatcher(final JORResourceProvider provider) {
+		this.assetDispatcher = new AssetDispatcher(provider);
+		this.controllerDispatcher = new ControllerDispatcher(provider);
+		this.resourceProvider = provider;
 	}
 	
 	/**

@@ -17,7 +17,7 @@ public class DefaultJORServer implements JavaOnRailsServer {
 	private final JORResourceProvider resourceProvider;
 	
 	public DefaultJORServer(final JORResourceProvider provider) {
-		baseDispatch = new BaseDispatcher();
+		baseDispatch = new BaseDispatcher(provider);
 		resourceProvider = provider;
 	}
 	

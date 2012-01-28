@@ -21,5 +21,9 @@ public class JORResourceProvider {
 	public URL getController(final String controllerName) {
 		return getResource("controllers/" + controllerName);
 	}
+	
+	public URL getConfigFile(final String fileName) {
+		return getResource("config/" + fileName);
+	}
 
 }

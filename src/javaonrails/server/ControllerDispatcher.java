@@ -1,5 +1,7 @@
 package javaonrails.server;
 
+import javaonrails.JORResourceProvider;
+
 import org.jruby.embed.ScriptingContainer;
 import org.jruby.javasupport.JavaEmbedUtils.EvalUnit;
 
@@ -16,9 +18,11 @@ import com.sun.net.httpserver.HttpExchange;
 public class ControllerDispatcher implements JORDispatcher {
 
 	private final ScriptingContainer container;
-
-	public ControllerDispatcher() {
+	private final JORResourceProvider resourceProvider;
+	
+	public ControllerDispatcher(final JORResourceProvider provider) {
 		container = new ScriptingContainer();
+		resourceProvider = provider;
 		
 		container.runScriptlet("@object = [1,2,3,4]; puts @object.join(\" hello world \")");
 		final EvalUnit unit = container.parse("puts @object.class; puts @object.inspect");
@@ -32,6 +36,9 @@ public class ControllerDispatcher implements JORDispatcher {
 		System.out.println(s);
 
 		return false;
+	}
+	
+	public void loadRoutes() {
 	}
 
 }
