@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javaonrails.JORResourceProvider;
 import javaonrails.server.JavaOnRailsServer;
 
 import com.sun.net.httpserver.Headers;
@@ -36,6 +37,11 @@ public class JavaOnRailsDummyServer implements JavaOnRailsServer {
 			responseBody.write("Hello world\n".getBytes());
 			responseBody.close();
 		}
+	}
+
+	@Override
+	public JORResourceProvider getResourceProvider() {
+		return null;
 	}
 
 }

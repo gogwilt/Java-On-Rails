@@ -1,20 +1,17 @@
 package javaonrails.test;
 
+import java.net.URISyntaxException;
+
+import javaonrails.JORResourceProvider;
 import javaonrails.client.JavaOnRailsClient;
 import javaonrails.server.DefaultJORServer;
 import javaonrails.server.JavaOnRailsServer;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 
-import com.sun.net.httpserver.HttpServer;
+import sampleapp.SampleJORApp;
 
 public class JORClientTester {
 
@@ -29,7 +26,7 @@ public class JORClientTester {
 	    shell.setText("Browser Example");
 	    shell.setSize(1100, 800);
 	    
-	    server = new DefaultJORServer();
+	    server = new DefaultJORServer(new JORResourceProvider(SampleJORApp.class));
 	    client = new JavaOnRailsClient(shell, server);
 	    
 	    final Browser browser = client.getBrowser();
@@ -49,7 +46,7 @@ public class JORClientTester {
 	
 	static JORClientTester jorct;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws URISyntaxException {
 		jorct = new JORClientTester();
 		jorct.run();
 	}

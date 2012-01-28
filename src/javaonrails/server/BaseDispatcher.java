@@ -23,7 +23,11 @@ public class BaseDispatcher implements JORDispatcher {
 	 */
 	@Override
 	public boolean routeExchange(final HttpExchange exchange) {
-		// TODO Auto-generated method stub
+		if (controllerDispatcher.routeExchange(exchange)) {
+			return true;
+		} else if (assetDispatcher.routeExchange(exchange)) {
+			return true;
+		}
 		return false;
 	}
 	
