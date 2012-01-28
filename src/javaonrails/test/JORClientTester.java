@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+import com.sun.net.httpserver.HttpServer;
+
 public class JORClientTester {
 
 	private final Display display;
@@ -25,7 +27,7 @@ public class JORClientTester {
 	    shell = new Shell(display);
 	    shell.setText("Browser Example");
 	    shell.setSize(1100, 800);
-
+	    
 	    server = new JavaOnRailsDummyServer();
 	    client = new JavaOnRailsClient(shell, server);
 	    
@@ -35,12 +37,13 @@ public class JORClientTester {
 	
 	public void run() {
 		shell.open();
-		client.goToUrl("http://www.google.com");
+		client.goToUrl("http://localhost:3000/test.txt");
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		display.dispose();		
+		display.dispose();
+		client.dispose();
 	}
 	
 	static JORClientTester jorct;

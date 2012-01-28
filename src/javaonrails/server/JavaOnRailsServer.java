@@ -1,5 +1,7 @@
 package javaonrails.server;
 
-public interface JavaOnRailsServer {
+import com.sun.net.httpserver.HttpHandler;
+
+public interface JavaOnRailsServer extends HttpHandler {
 
 }
