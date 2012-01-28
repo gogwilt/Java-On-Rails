@@ -1,6 +1,7 @@
 package javaonrails.test;
 
 import javaonrails.client.JavaOnRailsClient;
+import javaonrails.server.DefaultJORServer;
 import javaonrails.server.JavaOnRailsServer;
 
 import org.eclipse.swt.SWT;
@@ -28,7 +29,7 @@ public class JORClientTester {
 	    shell.setText("Browser Example");
 	    shell.setSize(1100, 800);
 	    
-	    server = new JavaOnRailsDummyServer();
+	    server = new DefaultJORServer();
 	    client = new JavaOnRailsClient(shell, server);
 	    
 	    final Browser browser = client.getBrowser();
@@ -50,7 +51,6 @@ public class JORClientTester {
 	
 	public static void main(String[] args) {
 		jorct = new JORClientTester();
-
 		jorct.run();
 	}
 }
