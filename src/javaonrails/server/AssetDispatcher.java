@@ -9,7 +9,7 @@ import com.sun.net.httpserver.HttpExchange;
 public class AssetDispatcher implements JORDispatcher {
 
 	@Override
-	public boolean routeExchange(HttpExchange exchange) {
+	public boolean routeExchange(final HttpExchange exchange) {
 		// TODO Auto-generated method stub
 		return false;
 	}
