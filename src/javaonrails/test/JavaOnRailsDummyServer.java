@@ -17,6 +17,7 @@ public class JavaOnRailsDummyServer implements JavaOnRailsServer {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		System.err.println("Handling : " + exchange.getRequestMethod());
+		System.err.println("Exchange : " + exchange.getRequestURI());
 		
 		String requestMethod = exchange.getRequestMethod();
 		if (requestMethod.equalsIgnoreCase("GET")) {
