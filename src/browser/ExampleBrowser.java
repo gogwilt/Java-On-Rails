@@ -10,6 +10,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+/**
+ * Example copied from:
+ * http://stackoverflow.com/questions/3749154/swt-awt-bridge-swt-in-swing-problem
+ *
+ */
 public class ExampleBrowser {
 	public static void main(String[] args) {
 	    Display display = new Display();
