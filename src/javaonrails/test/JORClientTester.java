@@ -38,7 +38,7 @@ public class JORClientTester {
 
 	public void run() {
 		shell.open();
-		client.goToUrl("http://localhost:3000/test_controller/test_stuf");
+		client.goToUrl("http://localhost:3000/test/test_method");
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();

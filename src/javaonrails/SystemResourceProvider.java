@@ -7,8 +7,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import javaonrails.ApplicationResourceProvider.ApplicationResource;
-
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
 
@@ -21,7 +19,7 @@ import com.google.common.io.Files;
 public class SystemResourceProvider {
 
 	public enum SystemResource implements JORResource {
-		ROOT("");
+		CONTROLLER("controller");
 
 		private final String directoryPath;
 
@@ -41,24 +39,32 @@ public class SystemResourceProvider {
 	}
 
 	/* TODO refactor shared code w/ ApplicationResourceProvider */
-	
+
 	public URL getResource(final String path) {
 		return resourceClass.getResource(path);
 	}
-	
-	public URL getResource(final ApplicationResource type, final String path) {
-		String relpath = type.getDirectoryPath() + File.separator + path;
+
+	public URL getResource(final SystemResource type, final String path) {
+		String relpath;
+		if (type.getDirectoryPath().isEmpty()) {
+			relpath = path;
+		} else {
+			relpath = type.getDirectoryPath() + File.separator + path;
+		}
+		System.out.println("Get Resource: " + relpath);
 		return getResource(relpath);
 	}
 
-	public String loadFile(final ApplicationResource type, final String name) throws IOException {
+	public String loadFile(final SystemResource type, final String name) throws IOException {
 		final URL fileURL = getResource(type.getDirectoryPath() + File.separator + name);
 		return loadFile(fileURL);
 	}
-	
+
 	public static String loadFile(final URL fromUrl) throws IOException {
+		System.out.println("File load: " + fromUrl);
 		try {
-			final List<String> fileLines = Files.readLines(new File(fromUrl.toURI()), Charset.defaultCharset());
+			final List<String> fileLines = Files.readLines(new File(fromUrl.toURI()),
+					Charset.defaultCharset());
 			return Joiner.on("\n").join(fileLines);
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
