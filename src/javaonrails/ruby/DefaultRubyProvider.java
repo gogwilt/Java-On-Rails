@@ -79,7 +79,9 @@ public class DefaultRubyProvider implements RubyProvider {
 	}
 
 	private void setApplicationLoadScripts() {
+		// TODO - possible auto-loading
 		addLoadScript("require 'routes'");
+		addLoadScript("require 'test_controller'");
 	}
 
 	@Override
