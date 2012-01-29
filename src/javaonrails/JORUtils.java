@@ -19,6 +19,6 @@ public class JORUtils {
 	}
 	
 	public static boolean isGetRequest(final HttpExchange exchange) {
-		return exchange.getProtocol().equalsIgnoreCase("GET");
+		return exchange.getRequestMethod().equalsIgnoreCase("GET");
 	}
 }
