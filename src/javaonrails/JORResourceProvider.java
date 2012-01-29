@@ -19,7 +19,10 @@ public class JORResourceProvider {
 	
 	public enum ResourceType {
 		CONFIG("config"), 
-		CONTROLLER("controllers");
+		CONTROLLER("controllers"),
+		IMAGES("assets" + File.separator + "images"),
+		JAVASCRIPTS("assets" + File.separator + "javascripts"),
+		STYLESHEETS("assets" + File.separator + "stylesheets");
 		
 		private final String directoryPath;
 		
@@ -41,13 +44,9 @@ public class JORResourceProvider {
 	public URL getResource(final String path) {
 		return resourceClass.getResource(path);
 	}
-
-	public URL getController(final String controllerName) {
-		return getResource("controllers/" + controllerName);
-	}
-
-	public URL getConfigFile(final String fileName) {
-		return getResource("config/" + fileName);
+	
+	public URL getResource(final ResourceType type, final String path) {
+		return getResource(type.getDirectoryPath() + File.separator + path);
 	}
 
 	public String loadFile(final ResourceType type, final String name) throws IOException {
