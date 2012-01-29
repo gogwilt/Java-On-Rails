@@ -40,6 +40,10 @@ public class SystemResourceProvider {
 
 	/* TODO refactor shared code w/ ApplicationResourceProvider */
 
+	public URL getResourceLoadPath(final SystemResource type) {
+		return resourceClass.getResource(type.getDirectoryPath());
+	}
+	
 	public URL getResource(final String path) {
 		return resourceClass.getResource(path);
 	}

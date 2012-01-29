@@ -42,6 +42,10 @@ public class ApplicationResourceProvider {
 		this.resourceClass = cl;
 	}
 
+	public URL getResourceLoadPath(final ApplicationResource type) {
+		return resourceClass.getResource(type.getDirectoryPath());
+	}
+	
 	public URL getResource(final String path) {
 		return resourceClass.getResource(path);
 	}

@@ -6,8 +6,7 @@ module JORController
   module Routing 
     
     class Routes
-      
-     $routes = Hash.new {|h,k| h[k] = nil}
+      $routes = Hash.new {|h,k| h[k] = nil}
       
       def self.draw(opts = {})
         $routes = opts
@@ -20,7 +19,8 @@ module JORController
       def self.dump
         $routes.each{|k,v| puts "#{k} => #{v}"}
       end
-    
     end
+    
   end
+  
 end
