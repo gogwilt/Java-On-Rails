@@ -29,9 +29,10 @@ public class BaseDispatcher implements JORDispatcher {
 	 */
 	@Override
 	public boolean routeExchange(final HttpExchange exchange) throws IOException {
-		if (controllerDispatcher.routeExchange(exchange)) {
+		if (assetDispatcher.routeExchange(exchange)) {
 			return true;
-		} else if (assetDispatcher.routeExchange(exchange)) {
+		}
+		else if (controllerDispatcher.routeExchange(exchange)) {
 			return true;
 		}
 		return false;

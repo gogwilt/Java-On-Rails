@@ -22,9 +22,11 @@ public class AssetDispatcher implements JORDispatcher {
 	
 	@Override
 	public boolean routeExchange(final HttpExchange exchange) throws IOException {
-		if (exchange.getRequestURI().getPath().startsWith("assets/")) {
-			JORUtils.replyWith404(exchange);
-			return true;
+		if (JORUtils.isGetRequest(exchange)) {
+			if (exchange.getRequestURI().getPath().startsWith("/assets/")) {
+				JORUtils.replyWith404(exchange);
+				return true;
+			}
 		}
 		return false;
 	}

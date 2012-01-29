@@ -35,7 +35,7 @@ public class JORClientTester {
 	
 	public void run() {
 		shell.open();
-		client.goToUrl("http://localhost:3000/test.txt");
+		client.goToUrl("http://localhost:3000/assets/badger.png");
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
