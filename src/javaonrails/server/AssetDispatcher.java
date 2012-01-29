@@ -39,10 +39,6 @@ public class AssetDispatcher implements JORDispatcher {
 	}
 	
 	public static String removeBasePath(String path) {
-		if (path.startsWith(BASE_PATH)) {
-			return path.substring(BASE_PATH.length());
-		} else {
-			return path;
-		}
+		return JORUtils.removeBasePath(BASE_PATH, path);
 	}
 }

@@ -22,7 +22,8 @@ public class JORResourceProvider {
 		CONTROLLER("controllers"),
 		IMAGES("assets" + File.separator + "images"),
 		JAVASCRIPTS("assets" + File.separator + "javascripts"),
-		STYLESHEETS("assets" + File.separator + "stylesheets");
+		STYLESHEETS("assets" + File.separator + "stylesheets"),
+		STATIC_PAGES("public");
 		
 		private final String directoryPath;
 		
@@ -46,7 +47,8 @@ public class JORResourceProvider {
 	}
 	
 	public URL getResource(final ResourceType type, final String path) {
-		return getResource(type.getDirectoryPath() + File.separator + path);
+		String relpath = type.getDirectoryPath() + File.separator + path;
+		return getResource(relpath);
 	}
 
 	public String loadFile(final ResourceType type, final String name) throws IOException {

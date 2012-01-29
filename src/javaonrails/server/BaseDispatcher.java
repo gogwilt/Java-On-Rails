@@ -12,11 +12,13 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class BaseDispatcher implements JORDispatcher {
 
+	private StaticPageDispatcher staticDispatcher;
 	private AssetDispatcher assetDispatcher;
 	private ControllerDispatcher controllerDispatcher;
 	private final JORResourceProvider resourceProvider;
 	
 	public BaseDispatcher(final JORResourceProvider provider) {
+		this.staticDispatcher = new StaticPageDispatcher(provider);
 		this.assetDispatcher = new AssetDispatcher(provider);
 		this.controllerDispatcher = new ControllerDispatcher(provider);
 		this.resourceProvider = provider;
@@ -29,6 +31,9 @@ public class BaseDispatcher implements JORDispatcher {
 	 */
 	@Override
 	public boolean routeExchange(final HttpExchange exchange) throws IOException {
+		if (staticDispatcher.routeExchange(exchange)) {
+			return true;
+		}
 		if (assetDispatcher.routeExchange(exchange)) {
 			return true;
 		}

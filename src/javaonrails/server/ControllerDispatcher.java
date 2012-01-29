@@ -7,8 +7,6 @@ import javaonrails.JORResourceProvider;
 import org.jruby.embed.ScriptingContainer;
 import org.jruby.javasupport.JavaEmbedUtils.EvalUnit;
 
-import sampleapp.SampleJORApp;
-
 import com.sun.net.httpserver.HttpExchange;
 
 /**
