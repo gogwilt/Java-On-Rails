@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Pattern;
 
-import javaonrails.ApplicationResourceProvider;
-import javaonrails.ApplicationResourceProvider.ApplicationResource;
+import javaonrails.resource.ApplicationResourceProvider;
+import javaonrails.resource.ApplicationResourceProvider.ApplicationResource;
 import javaonrails.JORUtils;
 
 import com.sun.net.httpserver.HttpExchange;

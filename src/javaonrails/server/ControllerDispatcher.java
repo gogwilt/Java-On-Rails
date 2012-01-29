@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import javax.script.ScriptEngineManager;
 
-import javaonrails.ApplicationResourceProvider;
-import javaonrails.SystemResourceProvider;
-import javaonrails.ApplicationResourceProvider.ApplicationResource;
-import javaonrails.SystemResourceProvider.SystemResource;
+import javaonrails.resource.ApplicationResourceProvider;
+import javaonrails.resource.SystemResourceProvider;
+import javaonrails.resource.ApplicationResourceProvider.ApplicationResource;
+import javaonrails.resource.SystemResourceProvider.SystemResource;
 
 import org.jruby.embed.LocalVariableBehavior;
 import org.jruby.embed.ScriptingContainer;

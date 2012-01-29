@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javaonrails.ApplicationResourceProvider;
+import javaonrails.resource.ApplicationResourceProvider;
 import javaonrails.server.JavaOnRailsServer;
 
 import com.sun.net.httpserver.Headers;

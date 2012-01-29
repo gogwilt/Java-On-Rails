@@ -2,9 +2,9 @@ package javaonrails.test;
 
 import java.net.URISyntaxException;
 
-import javaonrails.ApplicationResourceProvider;
-import javaonrails.SystemResourceProvider;
 import javaonrails.client.JavaOnRailsClient;
+import javaonrails.resource.ApplicationResourceProvider;
+import javaonrails.resource.SystemResourceProvider;
 import javaonrails.server.DefaultJORServer;
 import javaonrails.server.JavaOnRailsServer;
 

@@ -1,4 +1,4 @@
-package javaonrails;
+package javaonrails.resource;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,6 @@ import com.google.common.io.Files;
 
 /**
  * Provides an interface for accessing application-level resource files.
- * 
  * @author rbuckheit
  */
 public class ApplicationResourceProvider {

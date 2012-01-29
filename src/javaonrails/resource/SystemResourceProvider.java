@@ -1,4 +1,4 @@
-package javaonrails;
+package javaonrails.resource;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
+
 
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;

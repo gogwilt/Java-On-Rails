@@ -2,8 +2,8 @@ package javaonrails.server;
 
 import java.io.IOException;
 
-import javaonrails.ApplicationResourceProvider;
-import javaonrails.SystemResourceProvider;
+import javaonrails.resource.ApplicationResourceProvider;
+import javaonrails.resource.SystemResourceProvider;
 
 import com.sun.net.httpserver.HttpExchange;
 

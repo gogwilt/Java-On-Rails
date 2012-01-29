@@ -1,6 +1,6 @@
 package javaonrails.server;
 
-import javaonrails.ApplicationResourceProvider;
+import javaonrails.resource.ApplicationResourceProvider;
 
 import com.sun.net.httpserver.HttpHandler;
 
