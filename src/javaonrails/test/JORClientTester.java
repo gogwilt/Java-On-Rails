@@ -3,6 +3,7 @@ package javaonrails.test;
 import java.net.URISyntaxException;
 
 import javaonrails.ApplicationResourceProvider;
+import javaonrails.SystemResourceProvider;
 import javaonrails.client.JavaOnRailsClient;
 import javaonrails.server.DefaultJORServer;
 import javaonrails.server.JavaOnRailsServer;
@@ -11,6 +12,7 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import rails.JORSystem;
 import sampleapp.SampleJORApp;
 
 public class JORClientTester {
@@ -19,23 +21,24 @@ public class JORClientTester {
 	private final Shell shell;
 	private final JavaOnRailsClient client;
 	private final JavaOnRailsServer server;
-	
+
 	public JORClientTester() {
-	    display = new Display();
-	    shell = new Shell(display);
-	    shell.setText("Browser Example");
-	    shell.setSize(1100, 800);
-	    
-	    server = new DefaultJORServer(new ApplicationResourceProvider(SampleJORApp.class));
-	    client = new JavaOnRailsClient(shell, server);
-	    
-	    final Browser browser = client.getBrowser();
-	    browser.setBounds(0, 0, 1100, 800);
+		display = new Display();
+		shell = new Shell(display);
+		shell.setText("Browser Example");
+		shell.setSize(1100, 800);
+
+		server = new DefaultJORServer(new ApplicationResourceProvider(SampleJORApp.class),
+				new SystemResourceProvider(JORSystem.class));
+		client = new JavaOnRailsClient(shell, server);
+
+		final Browser browser = client.getBrowser();
+		browser.setBounds(0, 0, 1100, 800);
 	}
-	
+
 	public void run() {
 		shell.open();
-		client.goToUrl("http://localhost:3000/test.html");
+		client.goToUrl("http://localhost:3000/test_controller/test_stuf");
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
@@ -43,9 +46,9 @@ public class JORClientTester {
 		display.dispose();
 		client.dispose();
 	}
-	
+
 	static JORClientTester jorct;
-	
+
 	public static void main(String[] args) throws URISyntaxException {
 		jorct = new JORClientTester();
 		jorct.run();

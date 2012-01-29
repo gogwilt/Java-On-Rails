@@ -3,11 +3,13 @@ package javaonrails.server;
 import java.io.IOException;
 
 import javaonrails.ApplicationResourceProvider;
+import javaonrails.SystemResourceProvider;
 
 import com.sun.net.httpserver.HttpExchange;
 
 /**
  * Handles all incoming requests.
+ * 
  * @author rbuckheit
  */
 public class BaseDispatcher implements JORDispatcher {
@@ -15,18 +17,24 @@ public class BaseDispatcher implements JORDispatcher {
 	private StaticPageDispatcher staticDispatcher;
 	private AssetDispatcher assetDispatcher;
 	private ControllerDispatcher controllerDispatcher;
-	private final ApplicationResourceProvider resourceProvider;
-	
-	public BaseDispatcher(final ApplicationResourceProvider provider) {
-		this.staticDispatcher = new StaticPageDispatcher(provider);
-		this.assetDispatcher = new AssetDispatcher(provider);
-		this.controllerDispatcher = new ControllerDispatcher(provider);
-		this.resourceProvider = provider;
+
+	private final ApplicationResourceProvider applicationProvider;
+	private final SystemResourceProvider systemProvider;
+
+	public BaseDispatcher(final ApplicationResourceProvider applicationProvider,
+			final SystemResourceProvider systemProvider) {
+		this.staticDispatcher = new StaticPageDispatcher(applicationProvider);
+		this.assetDispatcher = new AssetDispatcher(applicationProvider);
+		this.controllerDispatcher = new ControllerDispatcher(applicationProvider, systemProvider);
+		
+		this.systemProvider = systemProvider;
+		this.applicationProvider = applicationProvider;
 	}
-	
+
 	/**
-	 * Determines if the exchange should be routed to the asset dispatcher or the
-	 * controller dispatcher and delegates appropriately.
+	 * Determines if the exchange should be routed to the asset dispatcher or
+	 * the controller dispatcher and delegates appropriately.
+	 * 
 	 * @param exchange
 	 */
 	@Override
@@ -36,11 +44,10 @@ public class BaseDispatcher implements JORDispatcher {
 		}
 		if (assetDispatcher.routeExchange(exchange)) {
 			return true;
-		}
-		else if (controllerDispatcher.routeExchange(exchange)) {
+		} else if (controllerDispatcher.routeExchange(exchange)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 }
