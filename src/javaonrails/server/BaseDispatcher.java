@@ -1,5 +1,7 @@
 package javaonrails.server;
 
+import java.io.IOException;
+
 import javaonrails.JORResourceProvider;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -26,7 +28,7 @@ public class BaseDispatcher implements JORDispatcher {
 	 * @param exchange
 	 */
 	@Override
-	public boolean routeExchange(final HttpExchange exchange) {
+	public boolean routeExchange(final HttpExchange exchange) throws IOException {
 		if (controllerDispatcher.routeExchange(exchange)) {
 			return true;
 		} else if (assetDispatcher.routeExchange(exchange)) {

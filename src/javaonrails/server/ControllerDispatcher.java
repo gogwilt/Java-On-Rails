@@ -1,5 +1,7 @@
 package javaonrails.server;
 
+import java.io.IOException;
+
 import javaonrails.JORResourceProvider;
 
 import org.jruby.embed.ScriptingContainer;
@@ -30,7 +32,7 @@ public class ControllerDispatcher implements JORDispatcher {
 	}
 
 	@Override
-	public boolean routeExchange(final HttpExchange exchange) {
+	public boolean routeExchange(final HttpExchange exchange) throws IOException {
 		final String s = String.format("Routing exchange: %s %s %s", exchange.getProtocol(),
 				exchange.getRequestMethod(), exchange.getRequestURI(), exchange.getRequestBody());
 		System.out.println(s);

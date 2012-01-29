@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javaonrails.JORResourceProvider;
+import javaonrails.JORUtils;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -24,13 +25,7 @@ public class DefaultJORServer implements JavaOnRailsServer {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		if(!baseDispatch.routeExchange(exchange)) {
-			Headers responseHeaders = exchange.getResponseHeaders();
-			responseHeaders.set("Content-Type", "text/html");
-			exchange.sendResponseHeaders(404, 0);
-			
-			OutputStream responseBody = exchange.getResponseBody();
-			responseBody.write("<html><body><h1>404: Page Not Found</h1></body></html>".getBytes());
-			responseBody.close();
+			JORUtils.replyWith404(exchange);
 		}
 	}
 
