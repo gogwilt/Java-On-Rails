@@ -42,12 +42,17 @@ public class BaseDispatcher implements JORDispatcher {
 	 */
 	@Override
 	public boolean routeExchange(final HttpExchange exchange) throws IOException {
+		
+		System.out.println(String.format("Routing exchange: %s %s %s", exchange.getProtocol(),
+				exchange.getRequestMethod(), exchange.getRequestURI()));
+		
 		if (staticDispatcher.routeExchange(exchange)) {
 			return true;
 		}
 		if (assetDispatcher.routeExchange(exchange)) {
 			return true;
-		} else if (controllerDispatcher.routeExchange(exchange)) {
+		}
+		if (controllerDispatcher.routeExchange(exchange)) {
 			return true;
 		}
 		return false;
