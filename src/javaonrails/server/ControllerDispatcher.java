@@ -5,6 +5,7 @@ import java.io.IOException;
 import javaonrails.resource.ApplicationResourceProvider;
 import javaonrails.resource.SystemResourceProvider;
 import javaonrails.ruby.DefaultRubyProvider;
+import javaonrails.ruby.RubyProvider;
 
 import javax.script.ScriptEngineManager;
 
@@ -25,14 +26,16 @@ public class ControllerDispatcher implements JORDispatcher {
 
 	private final ApplicationResourceProvider application;
 	private final SystemResourceProvider system;
+	private final RubyProvider rubyProvider;
 
-	public ControllerDispatcher(final ApplicationResourceProvider provider,
-			final SystemResourceProvider systemProvider) {
+	public ControllerDispatcher(final ApplicationResourceProvider applicationProvider,
+			final SystemResourceProvider systemProvider, final RubyProvider rubyProvider) {
 		
 		this.manager = new ScriptEngineManager();
 		
 		this.system = systemProvider;
-		this.application = provider;
+		this.application = applicationProvider;
+		this.rubyProvider = rubyProvider;
 		
 		this.container = new DefaultRubyProvider(system, application).getScriptingContainer();
 	}

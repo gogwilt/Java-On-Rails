@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javaonrails.resource.ApplicationResourceProvider;
 import javaonrails.resource.SystemResourceProvider;
+import javaonrails.ruby.RubyProvider;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -20,15 +21,17 @@ public class BaseDispatcher implements JORDispatcher {
 
 	private final ApplicationResourceProvider applicationProvider;
 	private final SystemResourceProvider systemProvider;
+	private final RubyProvider rubyProvider;
 
 	public BaseDispatcher(final ApplicationResourceProvider applicationProvider,
-			final SystemResourceProvider systemProvider) {
+			final SystemResourceProvider systemProvider, final RubyProvider rubyProvider) {
 		this.staticDispatcher = new StaticPageDispatcher(applicationProvider);
 		this.assetDispatcher = new AssetDispatcher(applicationProvider);
-		this.controllerDispatcher = new ControllerDispatcher(applicationProvider, systemProvider);
+		this.controllerDispatcher = new ControllerDispatcher(applicationProvider, systemProvider, rubyProvider);
 		
 		this.systemProvider = systemProvider;
 		this.applicationProvider = applicationProvider;
+		this.rubyProvider = rubyProvider;
 	}
 
 	/**
