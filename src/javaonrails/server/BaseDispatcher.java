@@ -2,7 +2,7 @@ package javaonrails.server;
 
 import java.io.IOException;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -15,9 +15,9 @@ public class BaseDispatcher implements JORDispatcher {
 	private StaticPageDispatcher staticDispatcher;
 	private AssetDispatcher assetDispatcher;
 	private ControllerDispatcher controllerDispatcher;
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	
-	public BaseDispatcher(final JORResourceProvider provider) {
+	public BaseDispatcher(final ApplicationResourceProvider provider) {
 		this.staticDispatcher = new StaticPageDispatcher(provider);
 		this.assetDispatcher = new AssetDispatcher(provider);
 		this.controllerDispatcher = new ControllerDispatcher(provider);

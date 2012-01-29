@@ -2,7 +2,7 @@ package javaonrails.server;
 
 import java.io.IOException;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 
 import org.jruby.embed.ScriptingContainer;
 import org.jruby.javasupport.JavaEmbedUtils.EvalUnit;
@@ -18,9 +18,9 @@ import com.sun.net.httpserver.HttpExchange;
 public class ControllerDispatcher implements JORDispatcher {
 
 	private final ScriptingContainer container;
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	
-	public ControllerDispatcher(final JORResourceProvider provider) {
+	public ControllerDispatcher(final ApplicationResourceProvider provider) {
 		container = new ScriptingContainer();
 		resourceProvider = provider;
 		

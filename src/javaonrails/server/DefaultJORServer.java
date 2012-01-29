@@ -2,7 +2,7 @@ package javaonrails.server;
 
 import java.io.IOException;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 import javaonrails.JORUtils;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -10,9 +10,9 @@ import com.sun.net.httpserver.HttpExchange;
 public class DefaultJORServer implements JavaOnRailsServer {
 
 	private final BaseDispatcher baseDispatch;
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	
-	public DefaultJORServer(final JORResourceProvider provider) {
+	public DefaultJORServer(final ApplicationResourceProvider provider) {
 		baseDispatch = new BaseDispatcher(provider);
 		resourceProvider = provider;
 	}
@@ -25,7 +25,7 @@ public class DefaultJORServer implements JavaOnRailsServer {
 	}
 
 	@Override
-	public JORResourceProvider getResourceProvider() {
+	public ApplicationResourceProvider getResourceProvider() {
 		return resourceProvider;
 	}
 

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 import javaonrails.server.JavaOnRailsServer;
 
 import com.sun.net.httpserver.Headers;
@@ -41,7 +41,7 @@ public class JavaOnRailsDummyServer implements JavaOnRailsServer {
 	}
 
 	@Override
-	public JORResourceProvider getResourceProvider() {
+	public ApplicationResourceProvider getResourceProvider() {
 		return null;
 	}
 

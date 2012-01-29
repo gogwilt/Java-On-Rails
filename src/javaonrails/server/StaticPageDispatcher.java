@@ -3,17 +3,17 @@ package javaonrails.server;
 import java.io.IOException;
 import java.net.URL;
 
-import javaonrails.JORResourceProvider;
-import javaonrails.JORResourceProvider.ResourceType;
+import javaonrails.ApplicationResourceProvider;
+import javaonrails.ApplicationResourceProvider.ApplicationResource;
 import javaonrails.JORUtils;
 
 import com.sun.net.httpserver.HttpExchange;
 
 public class StaticPageDispatcher implements JORDispatcher {
 
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	
-	public StaticPageDispatcher(JORResourceProvider resourceProvider) {
+	public StaticPageDispatcher(ApplicationResourceProvider resourceProvider) {
 		this.resourceProvider = resourceProvider;
 	}
 
@@ -22,7 +22,7 @@ public class StaticPageDispatcher implements JORDispatcher {
 		if (!JORUtils.isGetRequest(exchange)) {
 			return false;
 		}
-		final URL url = resourceProvider.getResource(ResourceType.STATIC_PAGES, exchange.getRequestURI().getPath());
+		final URL url = resourceProvider.getResource(ApplicationResource.STATIC_PAGES, exchange.getRequestURI().getPath());
 		if (url == null) {
 			return false;
 		} else {

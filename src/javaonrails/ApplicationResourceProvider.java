@@ -11,13 +11,13 @@ import com.google.common.base.Joiner;
 import com.google.common.io.Files;
 
 /**
- * Provides an interface for accessing resources such as ruby, css, images, etc.
+ * Provides an interface for accessing application-level resource files.
  * 
  * @author rbuckheit
  */
-public class JORResourceProvider {
+public class ApplicationResourceProvider {
 	
-	public enum ResourceType {
+	public enum ApplicationResource implements JORResource {
 		CONFIG("config"), 
 		CONTROLLER("controllers"),
 		IMAGES("assets" + File.separator + "images"),
@@ -27,7 +27,7 @@ public class JORResourceProvider {
 		
 		private final String directoryPath;
 		
-		private ResourceType(final String directoryPath) {
+		private ApplicationResource(final String directoryPath) {
 			this.directoryPath = directoryPath;
 		}
 		
@@ -38,7 +38,7 @@ public class JORResourceProvider {
 
 	private final Class<?> resourceClass;
 
-	public JORResourceProvider(Class<?> cl) {
+	public ApplicationResourceProvider(Class<?> cl) {
 		this.resourceClass = cl;
 	}
 
@@ -46,12 +46,12 @@ public class JORResourceProvider {
 		return resourceClass.getResource(path);
 	}
 	
-	public URL getResource(final ResourceType type, final String path) {
+	public URL getResource(final ApplicationResource type, final String path) {
 		String relpath = type.getDirectoryPath() + File.separator + path;
 		return getResource(relpath);
 	}
 
-	public String loadFile(final ResourceType type, final String name) throws IOException {
+	public String loadFile(final ApplicationResource type, final String name) throws IOException {
 		final URL fileURL = getResource(type.getDirectoryPath() + File.separator + name);
 		return loadFile(fileURL);
 	}

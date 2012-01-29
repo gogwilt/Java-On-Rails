@@ -2,7 +2,7 @@ package javaonrails.server;
 
 import java.io.IOException;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 import javaonrails.JORUtils;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -16,10 +16,10 @@ public class AssetDispatcher implements JORDispatcher {
 
 	public static final String BASE_PATH = "/assets/";
 	
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	private final ImageDispatcher imageDispatcher;
 	
-	public AssetDispatcher(final JORResourceProvider provider) {
+	public AssetDispatcher(final ApplicationResourceProvider provider) {
 		this.resourceProvider = provider;
 		imageDispatcher = new ImageDispatcher(provider);
 	}

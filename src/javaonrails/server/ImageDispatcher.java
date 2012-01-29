@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Pattern;
 
-import javaonrails.JORResourceProvider;
-import javaonrails.JORResourceProvider.ResourceType;
+import javaonrails.ApplicationResourceProvider;
+import javaonrails.ApplicationResourceProvider.ApplicationResource;
 import javaonrails.JORUtils;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -16,9 +16,9 @@ public class ImageDispatcher implements JORDispatcher {
 		Pattern.compile(AssetDispatcher.BASE_PATH + ".*\\.(png|gif|jpeg|jpg)", 
 				Pattern.CASE_INSENSITIVE);
 	
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	
-	public ImageDispatcher(JORResourceProvider resourceProvider) {
+	public ImageDispatcher(ApplicationResourceProvider resourceProvider) {
 		this.resourceProvider = resourceProvider;
 	}
 
@@ -29,7 +29,7 @@ public class ImageDispatcher implements JORDispatcher {
 		}
 		final String path = exchange.getRequestURI().getPath();
 		if (IMAGE_FILE_PATTERN.matcher(path).matches()) {
-			final URL image = resourceProvider.getResource(ResourceType.IMAGES, AssetDispatcher.removeBasePath(path));
+			final URL image = resourceProvider.getResource(ApplicationResource.IMAGES, AssetDispatcher.removeBasePath(path));
 			if (image == null) {
 				JORUtils.replyWith404(exchange);
 			} else {

@@ -2,15 +2,15 @@ package javaonrails.server;
 
 import java.io.IOException;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 
 import com.sun.net.httpserver.HttpExchange;
 
 public class StylesheetDispatcher implements JORDispatcher {
 	
-	private final JORResourceProvider resourceProvider;
+	private final ApplicationResourceProvider resourceProvider;
 	
-	public StylesheetDispatcher(JORResourceProvider resourceProvider) {
+	public StylesheetDispatcher(ApplicationResourceProvider resourceProvider) {
 		this.resourceProvider = resourceProvider;
 	}
 

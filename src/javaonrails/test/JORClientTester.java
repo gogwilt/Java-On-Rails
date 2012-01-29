@@ -2,7 +2,7 @@ package javaonrails.test;
 
 import java.net.URISyntaxException;
 
-import javaonrails.JORResourceProvider;
+import javaonrails.ApplicationResourceProvider;
 import javaonrails.client.JavaOnRailsClient;
 import javaonrails.server.DefaultJORServer;
 import javaonrails.server.JavaOnRailsServer;
@@ -26,7 +26,7 @@ public class JORClientTester {
 	    shell.setText("Browser Example");
 	    shell.setSize(1100, 800);
 	    
-	    server = new DefaultJORServer(new JORResourceProvider(SampleJORApp.class));
+	    server = new DefaultJORServer(new ApplicationResourceProvider(SampleJORApp.class));
 	    client = new JavaOnRailsClient(shell, server);
 	    
 	    final Browser browser = client.getBrowser();
