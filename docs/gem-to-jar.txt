@@ -1,0 +1,6 @@
+[rbuckheit@ackbar:lib]$ java -jar jruby-complete-1.6.5.1.jar -S gem install -i ./rails-gems rails --no-rdoc --no-ri
+    [...]
+31 gems installed
+[rbuckheit@ackbar:lib]$ ls
+guava-11.0.1.jar           jruby-complete-1.6.5.1.jar rails-gems
+[rbuckheit@ackbar:lib]$ jar cf rails-gems.jar -C rails-gems/ .
