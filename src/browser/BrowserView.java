@@ -1,9 +1,10 @@
 package browser;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -26,6 +27,7 @@ public class BrowserView {
 	private final JComponent display;
 	private final Canvas canvas;
 	private Browser browser;
+	private Shell shell;
 	private Display swtDisplay;
 	private final Thread swtThread;
 	private volatile boolean browserInitialized = false;
@@ -50,7 +52,37 @@ public class BrowserView {
 		
 		canvas = new Canvas();
 		display.add(canvas);
-		//canvas.setPreferredSize(new Dimension(500,300));
+		
+		display.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				// do nothing
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				// do nothing				
+			}
+
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				if (browserInitialized) {
+					swtDisplay.asyncExec(new Runnable() {
+						public void run() {
+							Dimension size = display.getSize();
+							shell.setSize(size.width, size.height);
+							browser.setSize(size.width, size.height);
+						}
+					});
+				}
+			}
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				// do nothing				
+			}
+		});
 		
 		swtThread = new Thread(swtDisplayAndBrowserCreateAndRun);
 		swtThread.start();
@@ -59,11 +91,13 @@ public class BrowserView {
 	private void initializeBrowserSwtAwtBridge() {		
 		swtDisplay.asyncExec(new Runnable() {
 			public void run() {
-				Shell shell = SWT_AWT.new_Shell(swtDisplay, canvas);
-				shell.setSize(500, 300);
+				Dimension size = display.getSize();
+				
+				shell = SWT_AWT.new_Shell(swtDisplay, canvas);
+				shell.setSize(size.width, size.height);
 				browser = new Browser(shell, SWT.NONE);
 				browser.setLayoutData(new GridData(GridData.FILL_BOTH));
-				browser.setSize(500, 300);
+				browser.setSize(size.width, size.height);
 				browser.setUrl("http://localhost:3000/test.html");
 				shell.open();
 
@@ -82,7 +116,6 @@ public class BrowserView {
 	public void goToUrl(String url) {
 		browser.setUrl(url);
 	}
-	
 	
 	public JComponent getDisplayComponent() {
 		return display;
