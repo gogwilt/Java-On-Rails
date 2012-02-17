@@ -7,6 +7,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -22,6 +24,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class BrowserView {
+	private static int lastPort = 3000;
 
 	private final HttpServer server;
 	private final JComponent display;
@@ -31,6 +34,10 @@ public class BrowserView {
 	private Display swtDisplay;
 	private final Thread swtThread;
 	private volatile boolean browserInitialized = false;
+	private final int port;
+	
+	private final Lock initialUrlLock = new ReentrantLock();
+	private String initialUrl = null;
 	
 	private Runnable swtDisplayAndBrowserCreateAndRun = new Runnable() {
 		public void run() {
@@ -43,10 +50,11 @@ public class BrowserView {
 	};
 
 	public BrowserView(HttpHandler handler) {
-		this(handler, 3000);
+		this(handler, lastPort++);
 	}
 	
 	public BrowserView(HttpHandler handler, int port) {
+		this.port = port;
 		server = initializeHttpServer(handler, port);
 		display = initializeDisplay();
 		
@@ -98,11 +106,17 @@ public class BrowserView {
 				browser = new Browser(shell, SWT.NONE);
 				browser.setLayoutData(new GridData(GridData.FILL_BOTH));
 				browser.setSize(size.width, size.height);
-				browser.setUrl("http://localhost:3000/test.html");
 				shell.open();
-
-				// TODO: some flag to indicate that this step is over.
-				browserInitialized = true;
+				
+				initialUrlLock.lock();
+				try {
+					if (initialUrl != null) {
+						browser.setUrl(initialUrl);
+					}
+				} finally {
+					browserInitialized = true;
+					initialUrlLock.unlock();
+				}
 			}
 		});
 	}
@@ -113,8 +127,21 @@ public class BrowserView {
 		return component;
 	}
 
-	public void goToUrl(String url) {
-		browser.setUrl(url);
+	public void goToUrl(final String url) {
+		initialUrlLock.lock();
+		try {
+			if (browserInitialized) {
+				swtDisplay.asyncExec(new Runnable() {
+					public void run() {
+						browser.setUrl(url);
+					}
+				});
+			} else {
+				initialUrl = url;
+			}
+		} finally {
+			initialUrlLock.unlock();
+		}
 	}
 	
 	public JComponent getDisplayComponent() {
@@ -145,5 +172,9 @@ public class BrowserView {
 
 	private void haltServer() {
 		server.stop(0);
+	}
+
+	public int getPort() {
+		return port;
 	}
 }

@@ -21,6 +21,7 @@ public class BrowserViewTester {
 		final JavaOnRailsServer server = new DefaultJORServer(new ApplicationResourceProvider(SampleJORApp.class),
 				new SystemResourceProvider(JORSystem.class));
 		final BrowserView view = new BrowserView(server);
+		view.goToUrl("http://localhost:" + view.getPort() + "/test.html");
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
