@@ -3,6 +3,7 @@ package browser;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.IOException;
@@ -12,6 +13,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -24,6 +27,11 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class BrowserView {
+	static {
+		System.err.println("Setting xembedserver to true");
+		System.setProperty("sun.awt.xembedserver", "true");
+	}
+	
 	private static int lastPort = 3000;
 
 	private final HttpServer server;
@@ -60,6 +68,7 @@ public class BrowserView {
 		
 		canvas = new Canvas();
 		display.add(canvas);
+		swtThread = new Thread(swtDisplayAndBrowserCreateAndRun);
 		
 		display.addComponentListener(new ComponentListener() {
 
@@ -75,12 +84,29 @@ public class BrowserView {
 
 			@Override
 			public void componentResized(ComponentEvent arg0) {
+				System.err.println("Component resized called");
 				if (browserInitialized) {
 					swtDisplay.asyncExec(new Runnable() {
 						public void run() {
 							Dimension size = display.getSize();
 							shell.setSize(size.width, size.height);
 							browser.setSize(size.width, size.height);
+							
+							shell.update();
+							browser.update();
+							shell.redraw();
+							browser.redraw();
+							
+							EventQueue.invokeLater(new Runnable() {
+								public void run() {
+									canvas.repaint();
+									
+									display.revalidate();
+									display.repaint();
+								}
+							});
+							
+							System.err.println("Component resized, canvas size: " + canvas.getSize());
 						}
 					});
 				}
@@ -92,8 +118,23 @@ public class BrowserView {
 			}
 		});
 		
-		swtThread = new Thread(swtDisplayAndBrowserCreateAndRun);
-		swtThread.start();
+		display.addAncestorListener(new AncestorListener() {
+			
+			@Override
+			public void ancestorRemoved(AncestorEvent arg0) {
+			}
+			
+			@Override
+			public void ancestorMoved(AncestorEvent arg0) {
+			}
+			
+			@Override
+			public void ancestorAdded(AncestorEvent arg0) {
+				if (!swtThread.isAlive()) {
+					swtThread.start();
+				}
+			}
+		});
 	}
 
 	private void initializeBrowserSwtAwtBridge() {		
