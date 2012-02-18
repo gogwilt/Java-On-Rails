@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Window;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
@@ -58,10 +60,14 @@ public class BrowserView {
 	};
 
 	public BrowserView(HttpHandler handler) {
-		this(handler, lastPort++);
+		this(handler, true);
 	}
 	
-	public BrowserView(HttpHandler handler, int port) {
+	public BrowserView(HttpHandler handler, boolean runSwtLoop) {
+		this(handler, lastPort++, runSwtLoop);
+	}
+	
+	public BrowserView(HttpHandler handler, int port, final boolean runSwtLoop) {
 		this.port = port;
 		server = initializeHttpServer(handler, port);
 		display = initializeDisplay();
@@ -84,18 +90,12 @@ public class BrowserView {
 
 			@Override
 			public void componentResized(ComponentEvent arg0) {
-				System.err.println("Component resized called");
 				if (browserInitialized) {
 					swtDisplay.asyncExec(new Runnable() {
 						public void run() {
 							Dimension size = display.getSize();
 							shell.setSize(size.width, size.height);
 							browser.setSize(size.width, size.height);
-							
-							shell.update();
-							browser.update();
-							shell.redraw();
-							browser.redraw();
 							
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
@@ -105,8 +105,6 @@ public class BrowserView {
 									display.repaint();
 								}
 							});
-							
-							System.err.println("Component resized, canvas size: " + canvas.getSize());
 						}
 					});
 				}
@@ -130,11 +128,15 @@ public class BrowserView {
 			
 			@Override
 			public void ancestorAdded(AncestorEvent arg0) {
-				if (!swtThread.isAlive()) {
+				if (!swtThread.isAlive() && runSwtLoop) {
 					swtThread.start();
 				}
 			}
 		});
+	}
+	
+	public void runSwtLoop() {
+		swtThread.run();
 	}
 
 	private void initializeBrowserSwtAwtBridge() {		
@@ -192,7 +194,7 @@ public class BrowserView {
 	public void dispose() {
 		haltServer();
 		try {
-			swtThread.join();
+			swtThread.join(50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
