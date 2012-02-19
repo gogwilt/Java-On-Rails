@@ -14,14 +14,15 @@ import javax.swing.JPanel;
 import rails.JORSystem;
 import sampleapp.SampleJORApp;
 import browser.BrowserView;
+import browser.SingleThreadBrowserView;
 
 
 public class BrowserViewTester {
 	public static void main(String args[]) {		
 		final JavaOnRailsServer server = new DefaultJORServer(new ApplicationResourceProvider(SampleJORApp.class),
 				new SystemResourceProvider(JORSystem.class));
-		final BrowserView view = new BrowserView(server);
-		view.goToUrl("http://localhost:" + view.getPort() + "/test.html");
+		final BrowserView view = new SingleThreadBrowserView(server);
+		view.goToUrl("/test.html");
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
