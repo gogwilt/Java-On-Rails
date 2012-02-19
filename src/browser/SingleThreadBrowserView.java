@@ -70,7 +70,7 @@ public class SingleThreadBrowserView implements BrowserView {
 
 	private void initializeListeners() {
 		
-		displayComponent.addHierarchyListener(new HierarchyListener() {
+		canvas.addHierarchyListener(new HierarchyListener() {
 			
 			@Override
 			public void hierarchyChanged(HierarchyEvent e) {
